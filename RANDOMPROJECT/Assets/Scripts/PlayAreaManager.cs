@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,8 @@ using Random = UnityEngine.Random;
 
 public class PlayAreaManager : MonoBehaviour
 {
+	[SerializeField] private GameManager gameManager;
+	
 	[SerializeField]
 	private CardDeck cardDeck;
 
@@ -25,7 +28,14 @@ public class PlayAreaManager : MonoBehaviour
 
 	private List<GameObject> cards = new List<GameObject>();
 	private List<Vector2> cardPositions = new List<Vector2>();
-	private Dictionary<GameObject, Vector2> cardObjectAndLocation = new Dictionary<GameObject, Vector2>();
+	private Dictionary<CardIdentifier.CardID, Vector2> cardObjectAndLocation = new Dictionary<CardIdentifier.CardID, Vector2>();
+
+	private void Start()
+	{
+		cards.Clear();
+		cardPositions.Clear();
+		cardObjectAndLocation.Clear();
+	}
 
 	private void InstantiateCards()
 	{
@@ -42,7 +52,7 @@ public class PlayAreaManager : MonoBehaviour
 		GenerateGrid();
 	}
 
-	public Dictionary<GameObject, Vector2> CardsInPlay()
+	public Dictionary<CardIdentifier.CardID, Vector2> CardsInPlay()
 	{
 		return cardObjectAndLocation;
 	}
@@ -55,9 +65,36 @@ public class PlayAreaManager : MonoBehaviour
 		StartCoroutine(InstantiateCardsDelay(1f));
 	}
 
-	private void UsePreviousGameGrid()
+	public void UsePreviousGameGrid(Dictionary<CardIdentifier.CardID,Vector2> cardsObjectAndPositionData)
 	{
-		
+		if (cards.Count > 0)
+		{
+			foreach (GameObject card in cards)
+			{
+				DestroyImmediate(card);
+			}
+			cards.Clear();
+		}
+
+		cardPositions.Clear();
+
+		foreach (var cardAndPosition in cardsObjectAndPositionData)
+		{
+			cardPositions.Add(cardAndPosition.Value);
+			SpawnCards();
+		}
+	}
+
+	public void RemoveCardFromPlay(GameObject cardToRemove)
+	{
+		var card = cardToRemove;
+		cards.Remove(card);
+		cardObjectAndLocation.Remove(card.GetComponent<Card>().CardID);
+		Destroy(card);
+		if (cards.Count == 0)
+		{
+			gameManager.EndGame();
+		}
 	}
 
 	private void GenerateGrid()
@@ -132,7 +169,11 @@ public class PlayAreaManager : MonoBehaviour
 
 		for (int i = 0; i < cards.Count; i++)
 		{
-			cardObjectAndLocation.Add(cards[i],cardPositions[i]);
+			var cardID = cards[i].GetComponent<Card>().CardID;
+			if (!cardObjectAndLocation.ContainsKey(cardID))
+			{
+				cardObjectAndLocation.Add(cards[i].GetComponent<Card>().CardID,cardPositions[i]);
+			}
 		}
 	}
 
