@@ -157,7 +157,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c54199d2610edf645af60a8283b17b77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CardNumber: 0
+  <CardID>k__BackingField: 0
 --- !u!1 &4914287711814352428
 GameObject:
   m_ObjectHideFlags: 0
