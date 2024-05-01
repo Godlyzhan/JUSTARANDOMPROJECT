@@ -12,7 +12,7 @@ public class PlayManagerEditor : Editor
 
 		if (GUILayout.Button("Instantiate cards"))
 		{
-			playAreaManager.InstantiateCards();
+			//playAreaManager.InstantiateCards();
 		}
 	}
 }

@@ -1,16 +1,13 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class PlayAreaManager : MonoBehaviour
 {
-	[Header("Card Grid")]
-	[SerializeField, Range(2, 5)]
-	private int numberOfRows = 4;
-	[SerializeField, Range(2, 6)]
-	private int numberOfColumns = 4;
+	[SerializeField]
+	private CardDeck cardDeck;
 
-	[Header("Spacing between cards")]
 	[SerializeField, Range(0.2f, 5f)]
 	private List<float> cardSpacings = new List<float>();
 	
@@ -20,16 +17,17 @@ public class PlayAreaManager : MonoBehaviour
 	[SerializeField]
 	private Vector2 playAreaSize = new Vector2(5f, 5f);
 
-	[SerializeField]
-	private CardDeck cardDeck;
-	
+	private int numberOfRows = 4;
+	private int numberOfColumns = 4;
+
 	private float cardSpacing;
 	private float cardScale;
 
 	private List<GameObject> cards = new List<GameObject>();
 	private List<Vector2> cardPositions = new List<Vector2>();
-	
-	public void InstantiateCards()
+	private Dictionary<GameObject, Vector2> cardObjectAndLocation = new Dictionary<GameObject, Vector2>();
+
+	private void InstantiateCards()
 	{
 		if (cards.Count > 0)
 		{
@@ -44,7 +42,25 @@ public class PlayAreaManager : MonoBehaviour
 		GenerateGrid();
 	}
 
-	void GenerateGrid()
+	public Dictionary<GameObject, Vector2> CardsInPlay()
+	{
+		return cardObjectAndLocation;
+	}
+
+	public void SelectGameMode(GameMode gameMode)
+	{
+		numberOfColumns = gameMode.Columns;
+		numberOfRows    = gameMode.Rows;
+
+		StartCoroutine(InstantiateCardsDelay(1f));
+	}
+
+	private void UsePreviousGameGrid()
+	{
+		
+	}
+
+	private void GenerateGrid()
 	{
 		SetSpacingSize();
 
@@ -86,7 +102,7 @@ public class PlayAreaManager : MonoBehaviour
 		SpawnCards();
 	}
 
-	void SpawnCards()
+	private void SpawnCards()
 	{
 		List<GameObject> duplicatedCards = new List<GameObject>();
 
@@ -113,9 +129,14 @@ public class PlayAreaManager : MonoBehaviour
 
 			cards.Add(newCard);
 		}
+
+		for (int i = 0; i < cards.Count; i++)
+		{
+			cardObjectAndLocation.Add(cards[i],cardPositions[i]);
+		}
 	}
 
-	void Shuffle(List<GameObject> cards)
+	private void Shuffle(List<GameObject> cards)
 	{
 		for (int i = 0; i < cards.Count; i++)
 		{
@@ -124,6 +145,12 @@ public class PlayAreaManager : MonoBehaviour
 			cards[i] = cards[randomIndex];
 			cards[randomIndex] = temp;
 		}
+	}
+
+	private IEnumerator InstantiateCardsDelay(float time)
+	{
+		yield return new WaitForSeconds(time);
+		InstantiateCards();
 	}
 
 	/// <summary>
