@@ -1,45 +1,68 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
-public class GameManager : MonoBehaviour
+public class GameManager : PersistentSingleton<GameManager>
 {
-    [SerializeField] private SaveGameManager saveGameManager;
+    public Dictionary<CardIdentifier.CardID,Vector2> cardsInPlay = new Dictionary<CardIdentifier.CardID, Vector2>();
+
     [SerializeField] private PlayAreaManager playAreaManager;
     [SerializeField] private int moves;
-    [SerializeField] private TextMeshProUGUI text;
-    [SerializeField] private GameObject continueButton;
+
+    [SerializeField] private UnityEvent EndGameEvent;
 
     private List<Card> selectedCards = new List<Card>();
 
     public Action SaveGame;
 
+    [field:SerializeField] 
+    public SaveGameManager SaveGameManager { get; private set; }
+
     public int Score { get; set; }
-    public Dictionary<GameObject,Vector2> cardsInPlay;
+
+    public Dictionary<CardIdentifier.CardID, Vector2> GameCardStates()
+    {
+        return playAreaManager.CardsInPlay();
+    }
+
+    public void ContinueGame()
+    {
+        cardsInPlay.Clear();
+        SaveGameManager.SaveDataReady += LoadGame;
+        SaveGameManager.LoadGame();
+    }
+
+    private void LoadGame()
+    {
+        SaveGameManager.SaveDataReady -= LoadGame;
+        playAreaManager.UsePreviousGameGrid(cardsInPlay);
+    }
+
+    public void EndGame()
+    {
+        EndGameEvent?.Invoke();
+    }
 
     public void SetScore(int score)
     {
+        Debug.LogError(score);
         Score = score;
     }
 
-    public void SetCardPositions(Dictionary<GameObject,Vector2> cardsInPlay)
+    public void SetCardPositions(Dictionary<CardIdentifier.CardID,Vector2> cardsInPlay)
     {
         this.cardsInPlay = cardsInPlay;
+        foreach (var cardInPlay in cardsInPlay)
+        {
+            Debug.LogError(cardInPlay.Key);
+            Debug.LogError(cardInPlay.Value);
+        }
     }
 
     public void SelectGameMode(GameMode gameMode)
     {
-        if (saveGameManager.LoadGame())
-        {
-            continueButton.SetActive(true);
-        }
-        else
-        {
-            continueButton.SetActive(false);
-        }
-
         playAreaManager.SelectGameMode(gameMode);
     }
 
@@ -50,7 +73,6 @@ public class GameManager : MonoBehaviour
         if (selectedCards.Count == 2)
         {
             moves++;
-            text.text = moves.ToString();
             MatchCards();
         }
     }
@@ -68,8 +90,10 @@ public class GameManager : MonoBehaviour
 
             await Task.Delay(TimeSpan.FromSeconds(0.5f));
 
-            Destroy(firstCard.gameObject);
-            Destroy(secondCard.gameObject);
+            playAreaManager.RemoveCardFromPlay(firstCard.gameObject);
+            playAreaManager.RemoveCardFromPlay(secondCard.gameObject);
+            Score++;
+            SaveGame?.Invoke();
         }
         else
         {
@@ -78,7 +102,5 @@ public class GameManager : MonoBehaviour
             firstCard.FlipCard();
             secondCard.FlipCard();
         }
-
-        SaveGame?.Invoke();
     }
 }
