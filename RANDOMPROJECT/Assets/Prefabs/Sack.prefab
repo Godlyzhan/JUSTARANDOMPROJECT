@@ -73,6 +73,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c54199d2610edf645af60a8283b17b77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flipDuration: 0.7
+  matchColor: {r: 0.504717, g: 1, b: 0.5131127, a: 1}
+  mismatchColor: {r: 0.9245283, g: 0.5451228, b: 0.5451228, a: 1}
+  spriteRenderer: {fileID: 4054110798413089451}
   <CardID>k__BackingField: 14
 --- !u!1 &1820186667690932792
 GameObject:
