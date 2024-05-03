@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -9,20 +8,31 @@ public class PlayAreaManager : MonoBehaviour
 {
 	[SerializeField] private GameManager gameManager;
 	[SerializeField] private CardDeck cardDeck;
-	[SerializeField] private RectTransform playAea;
-	[SerializeField, Range(0.2f, 5f)] private List<float> cardSpacings = new List<float>();
+	[SerializeField] private RectTransform playArea;
+	[SerializeField] private GameObject cardReference;
 
 	private int numberOfRows = 4;
 	private int numberOfColumns = 4;
 	private float cardSpacing;
-	private float cardScale;
+	private Vector3 cardScale;
 
+	private SpriteRenderer spriteRenderer;
 	private List<GameObject> cards = new List<GameObject>();
 	private List<Vector2> cardPositions = new List<Vector2>();
 	private List<CardIdentifier.CardID> cardIds = new List<CardIdentifier.CardID>();
 
 	public string GameMode { get; private set; }
 	public int BestScore { get; set; }
+
+	private void Start()
+	{
+		spriteRenderer = cardReference.GetComponentInChildren<SpriteRenderer>();
+
+		if (spriteRenderer == null)
+		{
+			Debug.LogError($"Could not get sprite render for card prefab : {cardReference}");
+		}
+	}
 
 	private void InstantiateCards()
 	{
@@ -61,7 +71,7 @@ public class PlayAreaManager : MonoBehaviour
 				{
 					GameObject newCard = Instantiate(cardDeck.Cards[j], SaveData.CardPositions[i], Quaternion.identity);
 					newCard.transform.SetParent(transform);
-					newCard.transform.localScale *= cardScale;
+					newCard.transform.localScale = cardScale;
 					cards.Add(newCard);
 					cardIds.Add(newCard.GetComponent<Card>().CardID);
 				}
@@ -121,32 +131,28 @@ public class PlayAreaManager : MonoBehaviour
 	{
 		SetSpacingSize();
 
-		// Card are the same size so we can grab the first card
-		Transform cardTransform = cardDeck.Cards[0].transform;
-		Vector3   scale     = cardTransform.localScale;
-
-		float cardWidth  = scale.x + cardSpacing;
-		float cardHeight = scale.y + cardSpacing;
+		float cardWidth  = cardScale.x + cardSpacing;
+		float cardHeight = cardScale.y + cardSpacing;
 		
 		float gridWidth  = numberOfColumns * cardWidth;
 		float gridHeight = numberOfRows * cardHeight;
 
-		Vector3 position = playAea.position;
+		Vector3 position = playArea.position;
 
-		float startX = position.x - (gridWidth / 2) + (scale.x / 2);
-		float startY = position.y + (gridHeight / 2) - (scale.y / 2);
+		float startX = position.x - (gridWidth / 2) + (cardSpacing / 2);
+		float startY = position.y + (gridHeight / 2) - (cardSpacing/ 2);
 
-		float minX = position.x - playAea.sizeDelta.x / 2;
-		float maxX = position.x + playAea.sizeDelta.x / 2;
-		float minY = position.y - playAea.sizeDelta.y / 2;
-		float maxY = position.y + playAea.sizeDelta.y / 2;
+		float minX = position.x - playArea.sizeDelta.x / 2;
+		float maxX = position.x + playArea.sizeDelta.x / 2;
+		float minY = position.y - playArea.sizeDelta.y / 2;
+		float maxY = position.y + playArea.sizeDelta.y / 2;
 
 		for (int row = 0; row < numberOfRows; row++)
 		{
 			for (int column = 0; column < numberOfColumns; column++)
 			{
-				float posX = startX + column * (scale.x + cardSpacing);
-				float posY = startY - row * (scale.y + cardSpacing);
+				float posX = startX + column * (cardScale.x + cardSpacing);
+				float posY = startY - row * (cardScale.y + cardSpacing);
 
 				posX = Mathf.Clamp(posX, minX, maxX);
 				posY = Mathf.Clamp(posY, minY, maxY);
@@ -184,7 +190,7 @@ public class PlayAreaManager : MonoBehaviour
 		{
 			GameObject newCard = Instantiate(duplicatedCards[i], cardPositions[i], Quaternion.identity);
 			newCard.transform.SetParent(transform);
-			newCard.transform.localScale *= cardScale;
+			newCard.transform.localScale = cardScale;
 
 			cards.Add(newCard);
 			cardIds.Add(newCard.GetComponent<Card>().CardID);
@@ -207,30 +213,25 @@ public class PlayAreaManager : MonoBehaviour
 	/// </summary>
 	private void SetSpacingSize()
 	{
-		int value = numberOfRows > numberOfColumns ? numberOfRows : numberOfColumns;
-		
-		switch (value)
+		var     spriteSize= spriteRenderer.bounds.size;
+
+		Vector3[] localCorners = new Vector3[4];
+		playArea.GetLocalCorners(localCorners);
+
+		// Convert the local corners to world space
+		Vector3[] worldCorners = new Vector3[4];
+		for (int i = 0; i < 4; i++)
 		{
-			case 2:
-				cardSpacing = cardSpacings[0];
-				cardScale   = 0.45f;
-				break;
-			case 3:
-				cardSpacing = cardSpacings[1];
-				cardScale   = 0.45f;
-				break;
-			case 4:
-				cardSpacing = cardSpacings[2];
-				cardScale   = 0.38f;
-				break;
-			case 5:
-				cardSpacing = cardSpacings[3];
-				cardScale   = 0.32f;
-				break;
-			case 6:
-				cardSpacing = cardSpacings[4];
-				cardScale   = 0.28f;
-				break;
+			worldCorners[i] = playArea.TransformPoint(localCorners[i]);
 		}
+
+		// Calculate the size of the RectTransform in world space
+		Vector3 sizeInWorldSpace = worldCorners[2] - worldCorners[0];
+
+		float     desiredSize  = sizeInWorldSpace.y / (numberOfRows + 1);
+		Vector3 cardScaleFactor  = new Vector3(desiredSize / spriteSize.x, desiredSize / spriteSize.y, 1f);
+		
+		cardScale   = cardScaleFactor;
+		cardSpacing = desiredSize;
 	}
 }
