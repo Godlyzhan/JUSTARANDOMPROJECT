@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 5c98a804130716e41b3815e4ea3b1947
+guid: a8c332627118b1446802546e506cbcc0
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,8 +9,9 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - Super Festival
-  fallbackFontReferences: []
+  - Cute Dino
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: d1a8433b34a706f4ba9467184eac0802, type: 3}
   customCharacters: 
   fontRenderingMode: 0
   ascentCalculationMode: 1
