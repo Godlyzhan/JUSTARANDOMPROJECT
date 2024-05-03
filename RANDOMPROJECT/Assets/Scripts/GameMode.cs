@@ -9,7 +9,8 @@ public class GameMode : MonoBehaviour
 	[field: SerializeField, Range(2, 6)] 
 	public int Columns { get; private set; } = 2;
 
-	private GameManager gameManager => GameManager.Instance;
+	[SerializeField]
+	private GameManager gameManager;
 
 	private void Start()
 	{
@@ -19,6 +20,6 @@ public class GameMode : MonoBehaviour
 
 	private void StartGameMode()
 	{
-		gameManager.SelectGameMode(this);
+		gameManager.PlayGameMode(this);
 	}
 }

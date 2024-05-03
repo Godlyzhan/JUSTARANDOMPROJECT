@@ -1,9 +1,9 @@
-using System;
 using UnityEngine;
 
 public class GameUIState : MonoBehaviour
 {
 	[SerializeField] private GameObject MenuUI;
+	[SerializeField] private GameObject GameModeUI;
 	[SerializeField] private GameObject GamePlayUI;
 	[SerializeField] private GameObject EndUI;
 
@@ -12,6 +12,7 @@ public class GameUIState : MonoBehaviour
 		Menu,
 		Gameplay,
 		End,
+		GameMode,
 		Disabled
 	}
 
@@ -28,6 +29,12 @@ public class GameUIState : MonoBehaviour
 		SetGameState();
 	}
 
+	public void SetGameModeState()
+	{
+		State = States.GameMode;
+		SetGameState();
+	}
+
 	public void SetGameplayState()
 	{
 		State = States.Gameplay;
@@ -40,43 +47,37 @@ public class GameUIState : MonoBehaviour
 		SetGameState();
 	}
 
-	public void SetDisableState()
-	{
-		State = States.Disabled;
-		SetGameState();
-	}
-
-	public void DisableObject(GameObject gameObjectToDisable)
-	{
-		gameObjectToDisable.SetActive(false);
-	}
-
-	public void EnableObject(GameObject gameObjectToEnable)
-	{
-		gameObjectToEnable.SetActive(true);
-	}
-
 	private void SetGameState()
 	{
 		switch (State)
 		{
 			case States.Menu:
 				UIActiveState(MenuUI, true);
+				UIActiveState(GameModeUI, false);
+				UIActiveState(GamePlayUI, false);
+				UIActiveState(EndUI, false);
+				break;
+			case States.GameMode:
+				UIActiveState(MenuUI, false);
+				UIActiveState(GameModeUI, true);
 				UIActiveState(GamePlayUI, false);
 				UIActiveState(EndUI, false);
 				break;
 			case States.Gameplay:
 				UIActiveState(MenuUI, false);
+				UIActiveState(GameModeUI, false);
 				UIActiveState(GamePlayUI, true);
 				UIActiveState(EndUI, false);
 				break;
 			case States.End:
 				UIActiveState(MenuUI, false);
+				UIActiveState(GameModeUI, false);
 				UIActiveState(GamePlayUI, false);
-				UIActiveState(EndUI, false);
+				UIActiveState(EndUI, true);
 				break;
 			case States.Disabled:
 				UIActiveState(MenuUI, false);
+				UIActiveState(GameModeUI, false);
 				UIActiveState(GamePlayUI, false);
 				UIActiveState(EndUI, false);
 				break;
