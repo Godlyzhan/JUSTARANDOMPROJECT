@@ -4,15 +4,10 @@ using UnityEngine;
 
 public class DisplayGameStats : MonoBehaviour
 {
-	[SerializeField]
-	private List<TextMeshProUGUI> scoreTexts = new List<TextMeshProUGUI>();
-	[SerializeField]
-	private List<TextMeshProUGUI> gameModeTexts = new List<TextMeshProUGUI>();
-	[SerializeField]
-	private List<TextMeshProUGUI> bestScoreTexts = new List<TextMeshProUGUI>();
-
-	[SerializeField]
-	private GameManager gameManager;
+	[SerializeField] private List<TextMeshProUGUI> scoreTexts = new List<TextMeshProUGUI>();
+	[SerializeField] private List<TextMeshProUGUI> gameModeTexts = new List<TextMeshProUGUI>();
+	[SerializeField] private List<TextMeshProUGUI> bestScoreTexts = new List<TextMeshProUGUI>();
+	[SerializeField] private GameManager gameManager;
 
 	private void OnEnable()
 	{

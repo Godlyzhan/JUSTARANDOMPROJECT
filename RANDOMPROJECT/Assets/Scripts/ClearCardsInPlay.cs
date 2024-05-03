@@ -3,8 +3,8 @@ using UnityEngine.UI;
 
 public class ClearCardsInPlay : MonoBehaviour
 {
-    [SerializeField]
-    private GameManager gameManager;
+    [SerializeField] private GameManager gameManager;
+
     private Button button;
 
     private void Start()

@@ -2,10 +2,11 @@ using UnityEngine;
 
 public class SetRectTransformToCanvasScale : MonoBehaviour
 {
-    private RectTransform rectTransform;
     [SerializeField] private RectTransform canvasRectTransform;
     [SerializeField] private float paddingPercentX = 100f;
     [SerializeField] private float paddingPercentY = 100f;
+
+    private RectTransform rectTransform;
 
     void Start()
     { 
