@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -5,4 +7,5 @@ using UnityEngine;
 public class CardDeck : ScriptableObject
 {
 	public List<GameObject> Cards = new List<GameObject>();
+	public List<Card> CardIdentifier = new List<Card>();
 }

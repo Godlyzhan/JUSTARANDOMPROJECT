@@ -2,17 +2,24 @@ using UnityEngine;
 
 public class Card : MonoBehaviour
 {
-    [SerializeField] private float flipSpeed = 0.5f;
+    [SerializeField] private float flipDuration = 0.7f;
+    [SerializeField] private Color matchColor;
+    [SerializeField] private Color mismatchColor;
+    [SerializeField] private SpriteRenderer spriteRenderer;
 
-    [field: SerializeField]
-    public CardIdentifier.CardID CardID { get; private set; }
-
-    public bool IsFlipped { get; set; }
-
-    private float flipDuration = 0.7f;
     private bool flip;
     private float flipAngle;
     private float flipTimer;
+    private Color defaultColor;
+
+    [field: SerializeField] public CardIdentifier.CardID CardID { get; private set; }
+
+    public bool IsFlipped { get; set; }
+
+    private void Start()
+    {
+        defaultColor   = spriteRenderer.color;
+    }
 
     private void Update()
     {
@@ -41,6 +48,7 @@ public class Card : MonoBehaviour
         {
             IsFlipped = false;
             OnCardFlipped(0);
+            spriteRenderer.color = defaultColor;
         }
     }
 
@@ -52,6 +60,12 @@ public class Card : MonoBehaviour
 
     public void MatchCard()
     {
+        spriteRenderer.color = matchColor;
+    }
+
+    public void MismatchCard()
+    {
+        spriteRenderer.color = mismatchColor;
     }
 
     private void RotateObject(float time, float angle)
