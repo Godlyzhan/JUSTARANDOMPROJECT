@@ -149,7 +149,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 13003505}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -159,8 +159,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: 0.222229, y: 0}
+  m_SizeDelta: {x: 800, y: 640}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &13003507
 MonoBehaviour:
@@ -175,8 +175,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvasRectTransform: {fileID: 1387963371}
-  paddingPercent: 80
-  positionPercent: 80
+  paddingPercentX: 60
+  paddingPercentY: 80
 --- !u!114 &13003508
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -190,7 +190,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5188679, g: 0.41571125, b: 0.12482198, a: 1}
+  m_Color: {r: 0.2264151, g: 0.223916, b: 0.21680313, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -238,7 +238,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 37510190}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -247,7 +247,7 @@ Transform:
   - {fileID: 413773883}
   - {fileID: 1466830521}
   m_Father: {fileID: 538630788}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &54390253
 GameObject:
@@ -1295,7 +1295,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 100, y: -150}
+  m_AnchoredPosition: {x: 0, y: -150}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &413773884
@@ -1548,6 +1548,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4176948733260567382, guid: 4b8bdb815cc9fed41b9fc428f96507fa, type: 3}
+      propertyPath: playAea
+      value: 
+      objectReference: {fileID: 13003506}
+    - target: {fileID: 4176948733260567382, guid: 4b8bdb815cc9fed41b9fc428f96507fa, type: 3}
+      propertyPath: playArea
+      value: 
+      objectReference: {fileID: 13003506}
+    - target: {fileID: 4176948733260567382, guid: 4b8bdb815cc9fed41b9fc428f96507fa, type: 3}
+      propertyPath: cardReference
+      value: 
+      objectReference: {fileID: 1229831720739304947, guid: daf32e0ab90e3d94599a40abc39b3d4e, type: 3}
     - target: {fileID: 4176948733260567383, guid: 4b8bdb815cc9fed41b9fc428f96507fa, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1668,8 +1680,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 37510191}
   - {fileID: 1344937000}
+  - {fileID: 37510191}
   - {fileID: 13003506}
   m_Father: {fileID: 1387963371}
   m_RootOrder: 2
@@ -1692,8 +1704,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvasRectTransform: {fileID: 1387963371}
-  paddingPercent: 100
-  positionPercent: 100
+  paddingPercentX: 100
+  paddingPercentY: 100
 --- !u!114 &538630790
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2788,7 +2800,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 100, y: -25}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &938873564
@@ -4179,7 +4191,7 @@ RectTransform:
   m_Children:
   - {fileID: 1664955709}
   m_Father: {fileID: 538630788}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -4251,8 +4263,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvasRectTransform: {fileID: 1387963371}
-  paddingPercent: 100
-  positionPercent: 100
+  paddingPercentX: 100
+  paddingPercentY: 100
 --- !u!1 &1387963367
 GameObject:
   m_ObjectHideFlags: 0
@@ -4845,7 +4857,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 100, y: -300}
+  m_AnchoredPosition: {x: 0, y: -300}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1466830522
@@ -7227,8 +7239,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvasRectTransform: {fileID: 1387963371}
-  paddingPercent: 100
-  positionPercent: 100
+  paddingPercentX: 100
+  paddingPercentY: 100
 --- !u!1 &2103769925
 GameObject:
   m_ObjectHideFlags: 0
@@ -7536,5 +7548,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvasRectTransform: {fileID: 1387963371}
-  paddingPercent: 100
-  positionPercent: 100
+  paddingPercentX: 100
+  paddingPercentY: 100
