@@ -131,7 +131,8 @@ public class GameManager : MonoBehaviour
 			playAreaManager.RemoveCardFromPlay(firstCard.gameObject, firstCard.CardID);
 			playAreaManager.RemoveCardFromPlay(secondCard.gameObject, secondCard.CardID);
 
-			await SaveLoad.SaveAsync();
+			playAreaManager.BuildCardIndex();
+			SaveGameProgress();
 		}
 		else
 		{
