@@ -8,7 +8,7 @@ public class SetRectTransformToCanvasScale : MonoBehaviour
 
     private RectTransform rectTransform;
 
-    void Start()
+    private void OnEnable()
     { 
         rectTransform           = GetComponent<RectTransform>();
         var sizeX = canvasRectTransform.sizeDelta.x * (paddingPercentX/100);

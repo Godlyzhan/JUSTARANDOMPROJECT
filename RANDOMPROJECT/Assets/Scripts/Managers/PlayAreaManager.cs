@@ -21,12 +21,15 @@ public class PlayAreaManager : MonoBehaviour
 	private List<Vector2> cardPositions = new List<Vector2>();
 	private List<CardIdentifier.CardID> cardIds = new List<CardIdentifier.CardID>();
 
+	private Vector2 playerAreaScale;
+
 	public string GameMode { get; private set; }
 	public int BestScore { get; set; }
 
 	private void Start()
 	{
-		spriteRenderer = cardReference.GetComponentInChildren<SpriteRenderer>();
+		playerAreaScale = playArea.sizeDelta;
+		spriteRenderer  = cardReference.GetComponentInChildren<SpriteRenderer>();
 
 		if (spriteRenderer == null)
 		{
@@ -37,7 +40,7 @@ public class PlayAreaManager : MonoBehaviour
 	private void InstantiateCards()
 	{
 		RemoveCardInPlay();
-		GenerateGrid();
+		SetSpacingSize();
 	}
 
 	public void SelectGameMode(GameMode gameMode)
@@ -129,8 +132,6 @@ public class PlayAreaManager : MonoBehaviour
 
 	private void GenerateGrid()
 	{
-		SetSpacingSize();
-
 		float cardWidth  = cardScale.x + cardSpacing;
 		float cardHeight = cardScale.y + cardSpacing;
 		
@@ -142,16 +143,16 @@ public class PlayAreaManager : MonoBehaviour
 		float startX = position.x - (gridWidth / 2) + (cardSpacing / 2);
 		float startY = position.y + (gridHeight / 2) - (cardSpacing/ 2);
 
-		float minX = position.x - playArea.sizeDelta.x / 2;
-		float maxX = position.x + playArea.sizeDelta.x / 2;
-		float minY = position.y - playArea.sizeDelta.y / 2;
-		float maxY = position.y + playArea.sizeDelta.y / 2;
+		float minX = position.x - playerAreaScale.x / 2;
+		float maxX = position.x + playerAreaScale.x / 2;
+		float minY = position.y - playerAreaScale.y / 2;
+		float maxY = position.y + playerAreaScale.y / 2;
 
 		for (int row = 0; row < numberOfRows; row++)
 		{
 			for (int column = 0; column < numberOfColumns; column++)
 			{
-				float posX = startX + column * (cardScale.x + cardSpacing);
+				float posX = startX + (column * (cardScale.x + cardSpacing));
 				float posY = startY - row * (cardScale.y + cardSpacing);
 
 				posX = Mathf.Clamp(posX, minX, maxX);
@@ -213,7 +214,7 @@ public class PlayAreaManager : MonoBehaviour
 	/// </summary>
 	private void SetSpacingSize()
 	{
-		var     spriteSize= spriteRenderer.bounds.size;
+		var spriteSize= spriteRenderer.bounds.size;
 
 		Vector3[] localCorners = new Vector3[4];
 		playArea.GetLocalCorners(localCorners);
@@ -233,5 +234,7 @@ public class PlayAreaManager : MonoBehaviour
 		
 		cardScale   = cardScaleFactor;
 		cardSpacing = desiredSize;
+
+		GenerateGrid();
 	}
 }

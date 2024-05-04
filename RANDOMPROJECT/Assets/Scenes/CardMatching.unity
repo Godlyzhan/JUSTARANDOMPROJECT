@@ -175,7 +175,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvasRectTransform: {fileID: 1387963371}
-  paddingPercentX: 60
+  paddingPercentX: 62
   paddingPercentY: 80
 --- !u!114 &13003508
 MonoBehaviour:
@@ -517,9 +517,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbe361e7b02470348a8e0e0bdbc7e5ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 457867757}
   <Rows>k__BackingField: 5
   <Columns>k__BackingField: 6
-  gameManager: {fileID: 457867757}
 --- !u!114 &206321998
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -878,9 +878,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbe361e7b02470348a8e0e0bdbc7e5ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 457867757}
   <Rows>k__BackingField: 5
   <Columns>k__BackingField: 4
-  gameManager: {fileID: 457867757}
 --- !u!114 &303580395
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1028,9 +1028,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbe361e7b02470348a8e0e0bdbc7e5ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 457867757}
   <Rows>k__BackingField: 2
   <Columns>k__BackingField: 3
-  gameManager: {fileID: 457867757}
 --- !u!114 &336707022
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1781,9 +1781,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbe361e7b02470348a8e0e0bdbc7e5ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 457867757}
   <Rows>k__BackingField: 3
   <Columns>k__BackingField: 4
-  gameManager: {fileID: 457867757}
 --- !u!114 &643332696
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4440,9 +4440,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbe361e7b02470348a8e0e0bdbc7e5ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 457867757}
   <Rows>k__BackingField: 4
   <Columns>k__BackingField: 5
-  gameManager: {fileID: 457867757}
 --- !u!114 &1415828799
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4724,9 +4724,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbe361e7b02470348a8e0e0bdbc7e5ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 457867757}
   <Rows>k__BackingField: 4
   <Columns>k__BackingField: 3
-  gameManager: {fileID: 457867757}
 --- !u!114 &1456064376
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5010,9 +5010,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbe361e7b02470348a8e0e0bdbc7e5ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 457867757}
   <Rows>k__BackingField: 2
   <Columns>k__BackingField: 2
-  gameManager: {fileID: 457867757}
 --- !u!114 &1505275682
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5855,9 +5855,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbe361e7b02470348a8e0e0bdbc7e5ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 457867757}
   <Rows>k__BackingField: 4
   <Columns>k__BackingField: 4
-  gameManager: {fileID: 457867757}
 --- !u!114 &1687198672
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7087,9 +7087,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbe361e7b02470348a8e0e0bdbc7e5ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 457867757}
   <Rows>k__BackingField: 5
   <Columns>k__BackingField: 5
-  gameManager: {fileID: 457867757}
 --- !u!114 &2060307576
 MonoBehaviour:
   m_ObjectHideFlags: 0
