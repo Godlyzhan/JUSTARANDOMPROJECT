@@ -16,6 +16,7 @@ public class SaveData
 	{
 		CardIdentifiers.Clear();
 		CardPositions.Clear();
+		CanContinue  = false;
 		CurrentScore = 0;
 	}
 

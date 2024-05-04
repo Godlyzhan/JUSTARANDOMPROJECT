@@ -9,6 +9,15 @@ public static class SaveLoad
     private const string FileName = "/savedGames.gd";
     public static SaveData SaveData = new SaveData();
 
+    public static void Save()
+    {
+        BinaryFormatter binaryFormatter = new BinaryFormatter();
+        using (FileStream file = File.Open(Application.persistentDataPath + FileName, FileMode.Create))
+        {
+            binaryFormatter.Serialize(file, SaveData);
+        }
+    }
+
     public static async Task SaveAsync()
     {
         BinaryFormatter binaryFormatter = new BinaryFormatter();

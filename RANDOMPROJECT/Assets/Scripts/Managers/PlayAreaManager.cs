@@ -120,16 +120,20 @@ public class PlayAreaManager : MonoBehaviour
 
 		if (cards.Count == 0)
 		{
-			gameManager.EndGame();
 			gameManager.CanContinue = false;
 			SaveLoad.SaveData.CardIdentifiers.Clear();
 			SaveLoad.SaveData.CardPositions.Clear();
 			cards.Clear();
 			cardIds.Clear();
+			gameManager.EndGame();
+		}
+		else
+		{
+			BuildCardIndex();
 		}
 	}
 
-	public void BuildCardIndex()
+	private void BuildCardIndex()
 	{
 		for (int i = 0; i < cards.Count; i++)
 		{

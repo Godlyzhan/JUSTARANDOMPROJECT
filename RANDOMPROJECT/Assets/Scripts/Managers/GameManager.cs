@@ -32,7 +32,6 @@ public class GameManager : MonoBehaviour
 		get => SaveLoad.SaveData.CanContinue;
 		set
 		{
-			Debug.Log($"can continue {value}");
 			continueButton.SetActive(value);
 			SaveLoad.SaveData.CanContinue = value;
 		}
@@ -92,7 +91,8 @@ public class GameManager : MonoBehaviour
 			};
 			SaveLoad.SaveData.GameModeScores.Add(gameModeScore);
 		}
-
+		SaveLoad.SaveData.CanContinue = false;
+		SaveLoad.Save();
 		endGameEvent?.Invoke();
 	}
 
@@ -131,7 +131,6 @@ public class GameManager : MonoBehaviour
 			playAreaManager.RemoveCardFromPlay(firstCard.gameObject, firstCard.CardID);
 			playAreaManager.RemoveCardFromPlay(secondCard.gameObject, secondCard.CardID);
 
-			playAreaManager.BuildCardIndex();
 			SaveGameProgress();
 		}
 		else
@@ -151,17 +150,8 @@ public class GameManager : MonoBehaviour
 
 	public void BackToMenu()
 	{
-		playAreaManager.BuildCardIndex();
 		SaveGameProgress();
 		gameUIState.SetMenuState();
-	}
-
-	private void OnApplicationQuit()
-	{
-		if (CanContinue)
-		{
-			SaveGameProgress();
-		}
 	}
 
 	private async void SaveGameProgress()
