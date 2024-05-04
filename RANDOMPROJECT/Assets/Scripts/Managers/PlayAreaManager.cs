@@ -41,17 +41,21 @@ public class PlayAreaManager : MonoBehaviour
 	{
 		RemoveCardInPlay();
 		SetSpacingSize();
+		GenerateGrid();
+		SpawnCards();
 	}
 
 	public void SelectGameMode(GameMode gameMode)
 	{
-		numberOfColumns = gameMode.Columns;
-		numberOfRows    = gameMode.Rows;
-		GameMode        = $"{numberOfColumns}x{numberOfRows}";
+		numberOfColumns           = gameMode.Columns;
+		numberOfRows              = gameMode.Rows;
+		GameMode                  = $"{numberOfColumns}x{numberOfRows}";
+		SaveLoad.SaveData.Columns = numberOfColumns;
+		SaveLoad.SaveData.Rows = numberOfRows;
 
-		if (SaveData.GameModeScores.Count > 0)
+		if (SaveLoad.SaveData.GameModeScores.Count > 0)
 		{
-			foreach (var gameModeScore in SaveData.GameModeScores)
+			foreach (var gameModeScore in SaveLoad.SaveData.GameModeScores)
 			{
 				if (gameModeScore.GameMode == GameMode)
 				{
@@ -66,13 +70,19 @@ public class PlayAreaManager : MonoBehaviour
 
 	public void LoadCardsInPlay()
 	{
-		for (int i = 0; i < SaveData.CardIdentifiers.Count; i++)
+		numberOfColumns = SaveLoad.SaveData.Columns;
+		numberOfRows    = SaveLoad.SaveData.Rows;
+		SetSpacingSize();
+		GenerateGrid();
+
+		for (int i = 0; i < SaveLoad.SaveData.CardIdentifiers.Count; i++)
 		{
 			for (int j = 0; j < cardDeck.CardIdentifier.Count; j++)
 			{
-				if (SaveData.CardIdentifiers[i] == (int)cardDeck.CardIdentifier[j].CardID)
+				if (SaveLoad.SaveData.CardIdentifiers[i] == (int)cardDeck.CardIdentifier[j].CardID)
 				{
-					GameObject newCard = Instantiate(cardDeck.Cards[j], SaveData.CardPositions[i], Quaternion.identity);
+					Vector2  cardPosition= SaveLoad.SaveData.CardPositions[i];
+					GameObject newCard = Instantiate(cardDeck.Cards[j], cardPosition, Quaternion.identity);
 					newCard.transform.SetParent(transform);
 					newCard.transform.localScale = cardScale;
 					cards.Add(newCard);
@@ -110,8 +120,8 @@ public class PlayAreaManager : MonoBehaviour
 		{
 			gameManager.EndGame();
 			gameManager.CanContinue = false;
-			SaveData.CardIdentifiers.Clear();
-			SaveData.CardPositions.Clear();
+			SaveLoad.SaveData.CardIdentifiers.Clear();
+			SaveLoad.SaveData.CardPositions.Clear();
 			cards.Clear();
 			cardIds.Clear();
 		}
@@ -124,10 +134,10 @@ public class PlayAreaManager : MonoBehaviour
 			var id           = cardIds[i];
 			var cardPosition = new Vector2(cards[i].transform.position.x, cards[i].transform.position.y);
 
-			SaveData.CardIdentifiers.Add((int)id);
-			SaveData.CardPositions.Add(cardPosition);
-			gameManager.CanContinue = true;
+			SaveLoad.SaveData.CardIdentifiers.Add((int)id);
+			SaveLoad.SaveData.CardPositions.Add(cardPosition);
 		}
+		gameManager.CanContinue = true;
 	}
 
 	private void GenerateGrid()
@@ -162,8 +172,6 @@ public class PlayAreaManager : MonoBehaviour
 				cardPositions.Add(cardPos);
 			}
 		}
-
-		SpawnCards();
 	}
 
 	private async void SpawnCards()
@@ -234,7 +242,5 @@ public class PlayAreaManager : MonoBehaviour
 		
 		cardScale   = cardScaleFactor;
 		cardSpacing = desiredSize;
-
-		GenerateGrid();
 	}
 }

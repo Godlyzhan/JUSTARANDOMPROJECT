@@ -20,26 +20,27 @@ public class GameManager : MonoBehaviour
 
 	public int Score
 	{
-		get => SaveData.CurrentScore;
+		get => SaveLoad.SaveData.CurrentScore;
 		set
 		{
-			SaveData.CurrentScore = value;
+			SaveLoad.SaveData.CurrentScore = value;
 		}
 	}
 	public bool CanContinue
 	{
-		get => SaveData.CanContinue;
+		get => SaveLoad.SaveData.CanContinue;
 		set
 		{
+			Debug.Log($"can continue {value}");
 			continueButton.SetActive(value);
-			SaveData.CanContinue = value;
+			SaveLoad.SaveData.CanContinue = value;
 		}
 	}
 
-	private async void Start()
+	private async void Awake()
 	{
 		await SaveLoad.LoadAsync();
-		CanContinue = SaveData.CanContinue;
+		CanContinue = SaveLoad.SaveData.CanContinue;
 	}
 
 	public async void ContinueGame()
@@ -57,7 +58,7 @@ public class GameManager : MonoBehaviour
 	public void PlayGameMode(GameMode gameMode)
 	{
 		Score = 0;
-		SaveData.ReturnToDefaults();
+		SaveLoad.SaveData.ReturnToDefaults();
 		playAreaManager.SelectGameMode(gameMode);
 		displayGameStats.UpdateScore(Score);
 		displayGameStats.UpdateGameMode(playAreaManager.GameMode);
@@ -68,9 +69,9 @@ public class GameManager : MonoBehaviour
 	{
 		bool gameDataExists = false;
 
-		if (SaveData.GameModeScores.Count != 0)
+		if (SaveLoad.SaveData.GameModeScores.Count != 0)
 		{
-			foreach (var gameModeScore in SaveData.GameModeScores)
+			foreach (var gameModeScore in SaveLoad.SaveData.GameModeScores)
 			{
 				if (gameModeScore.GameMode == playAreaManager.GameMode && gameModeScore.BestScore > Score)
 				{
@@ -88,7 +89,7 @@ public class GameManager : MonoBehaviour
 				GameMode  = playAreaManager.GameMode,
 				BestScore = Score
 			};
-			SaveData.GameModeScores.Add(gameModeScore);
+			SaveLoad.SaveData.GameModeScores.Add(gameModeScore);
 		}
 
 		endGameEvent?.Invoke();
@@ -143,7 +144,7 @@ public class GameManager : MonoBehaviour
 			secondCard.FlipCard();
 		}
 
-		SaveData.CurrentScore = Score;
+		SaveLoad.SaveData.CurrentScore = Score;
 	}
 
 	public void BackToMenu()
