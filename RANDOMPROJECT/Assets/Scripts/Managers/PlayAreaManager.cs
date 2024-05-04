@@ -75,7 +75,6 @@ public class PlayAreaManager : MonoBehaviour
 		GameMode        = $"{numberOfColumns}x{numberOfRows}";
 		gameManager.DisplayGameStats.UpdateGameMode(GameMode);
 		SetSpacingSize();
-		GenerateGrid();
 
 		for (int i = 0; i < SaveLoad.SaveData.CardIdentifiers.Count; i++)
 		{
@@ -109,7 +108,7 @@ public class PlayAreaManager : MonoBehaviour
 		cardPositions.Clear();
 	}
 
-	public void RemoveCardFromPlay(GameObject cardToRemove, CardIdentifier.CardID cardID)
+	public bool RemoveCardFromPlay(GameObject cardToRemove, CardIdentifier.CardID cardID)
 	{
 		if (cardToRemove != null)
 		{
@@ -126,14 +125,13 @@ public class PlayAreaManager : MonoBehaviour
 			cards.Clear();
 			cardIds.Clear();
 			gameManager.EndGame();
+			return false;
 		}
-		else
-		{
-			BuildCardIndex();
-		}
+
+		return true;
 	}
 
-	private void BuildCardIndex()
+	public void BuildCardIndex()
 	{
 		for (int i = 0; i < cards.Count; i++)
 		{

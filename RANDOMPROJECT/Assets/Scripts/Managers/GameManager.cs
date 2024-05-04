@@ -129,7 +129,10 @@ public class GameManager : MonoBehaviour
 
 			soundEffectsManager.CardMatchedSfx();
 			playAreaManager.RemoveCardFromPlay(firstCard.gameObject, firstCard.CardID);
-			playAreaManager.RemoveCardFromPlay(secondCard.gameObject, secondCard.CardID);
+			if (playAreaManager.RemoveCardFromPlay(secondCard.gameObject, secondCard.CardID))
+			{
+				playAreaManager.BuildCardIndex();
+			}
 
 			SaveGameProgress();
 		}
@@ -153,6 +156,15 @@ public class GameManager : MonoBehaviour
 		SaveGameProgress();
 		gameUIState.SetMenuState();
 	}
+
+	private void OnApplicationQuit()
+	{
+		if (CanContinue)
+		{
+			SaveGameProgress();
+		}
+	}
+
 
 	private async void SaveGameProgress()
 	{
