@@ -72,6 +72,8 @@ public class PlayAreaManager : MonoBehaviour
 	{
 		numberOfColumns = SaveLoad.SaveData.Columns;
 		numberOfRows    = SaveLoad.SaveData.Rows;
+		GameMode        = $"{numberOfColumns}x{numberOfRows}";
+		gameManager.DisplayGameStats.UpdateGameMode(GameMode);
 		SetSpacingSize();
 		GenerateGrid();
 

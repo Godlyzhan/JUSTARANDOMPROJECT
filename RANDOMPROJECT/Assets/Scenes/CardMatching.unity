@@ -1862,6 +1862,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 538630790}
     - target: {fileID: 4176948734117558908, guid: 4b8bdb815cc9fed41b9fc428f96507fa, type: 3}
+      propertyPath: <DisplayGameStats>k__BackingField
+      value: 
+      objectReference: {fileID: 538630790}
+    - target: {fileID: 4176948734117558908, guid: 4b8bdb815cc9fed41b9fc428f96507fa, type: 3}
       propertyPath: endGameEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1387963372}

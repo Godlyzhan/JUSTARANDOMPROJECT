@@ -11,12 +11,13 @@ public class GameManager : MonoBehaviour
 	[SerializeField] private UnityEvent endGameEvent;
 	[SerializeField] private GameObject continueButton;
 	[SerializeField] private GameUIState gameUIState;
-	[SerializeField] private DisplayGameStats displayGameStats;
 	[SerializeField] private SoundEffectsManager soundEffectsManager;
 
 	public Action<int> OnScoreChange;
 
 	private List<Card> selectedCards = new List<Card>();
+
+	[field:SerializeField] public DisplayGameStats DisplayGameStats { get; private set; }
 
 	public int Score
 	{
@@ -60,9 +61,9 @@ public class GameManager : MonoBehaviour
 		Score = 0;
 		SaveLoad.SaveData.ReturnToDefaults();
 		playAreaManager.SelectGameMode(gameMode);
-		displayGameStats.UpdateScore(Score);
-		displayGameStats.UpdateGameMode(playAreaManager.GameMode);
-		displayGameStats.UpdateBestScore(playAreaManager.BestScore);
+		DisplayGameStats.UpdateScore(Score);
+		DisplayGameStats.UpdateGameMode(playAreaManager.GameMode);
+		DisplayGameStats.UpdateBestScore(playAreaManager.BestScore);
 	}
 
 	public void EndGame()
